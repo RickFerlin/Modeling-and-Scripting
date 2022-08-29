@@ -1,0 +1,120 @@
+//Create base sphere
+polySphere -radius 3 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance 0 3 0;
+
+//Create middle sphere
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+polySphere -e -radius 2;
+move -relative -objectSpace -worldSpaceDistance 0 7 0;
+
+//Create head sphere
+polySphere -radius 1.4 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance 0 9.8 0; 
+
+//Create nose
+polyCone -radius .5 -height 2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 0 -axis 0 1 0 -roundCap 0 -createUVs 3 -ch 1;
+rotate -relative -worldSpace -forceOrderXYZ 90 0 0 ;
+move -relative 0 9.7 1.4;
+
+//Create Eyes
+polySphere -radius 0.2 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+scale -relative 1 1 0.6;
+move -relative 0.464 10.228 1.211;
+rotate -relative -objectSpace -forceOrderXYZ -14.307 24.358 -2.457;
+/* intended to deform the eye to a different shape, but I couldn't get it to work
+softSelect -softSelectEnabled 1;
+softSelect -softSelectDistance 0.197 -softSelectUVDistance 0.351843;
+select -replace pSpheere7.vtx[377];
+move -relative 0.015923 -0.03735 0.02790;
+select -replace pSphere7.vtx[278];
+move-relative -0.03019 -0.006726 0.02495;
+select -replace pSphere7.vtx[130];
+move -relative -0.04840 0.02775 0.01286;
+select -replace pSphere7.vtx[38];
+move -relative -0.01397 0.02973 -0.01158;
+*/
+polySphere -radius 0.2 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+scale -relative 1 1 0.6;
+move -relative -0.464 10.228 1.211;
+rotate -relative -objectSpace -forceOrderXYZ -14.307 -24.358 2.457;
+/* intended to deform the eye to a different shape, but I couldn't get it to work
+softSelect -softSelectEnabled 1;
+softSelect -softSelectDistance 0.197 -softSelectUVDistance 0.351843;
+select -replace pSpheere8.vtx[377];
+move -relative 0.015923 -0.03735 0.02790;
+select -replace pSphere8.vtx[278];
+move-relative -0.03019 -0.006726 0.02495;
+select -replace pSphere8.vtx[130];
+move -relative -0.04840 0.02775 0.01286;
+select -replace pSphere8.vtx[38];
+move -relative -0.01397 0.02973 -0.01158;
+*/
+
+//Create Buttons
+polyCylinder -radius 0.25 -height 0.2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative 0 7.893 1.689;
+rotate -relative -worldSpace -forceOrderXYZ 61.02 0 0;
+polyCylinder -radius 0.25 -height 0.2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative 0 7.1 1.934;
+rotate -relative -worldSpace -forceOrderXYZ 90 0 0;
+polyCylinder -radius 0.25 -height 0.2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative 0 6.322 1.792;
+rotate -relative -worldSpace -forceOrderXYZ 111 0 0;
+
+//create Arms
+polyCylinder -radius 0.12 -height 1.5 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative 2.338 7.595 0;
+rotate -relative -worldSpace -forceOrderXYZ 0 0 -108.953;
+select -r pCylinder4.f[40:59];
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pivotX 3.047191258 -pivotY 7.351144699 -pivotZ -2.235174179e-08 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder4.f[40:59];
+setAttr "polyExtrudeFace1.localTranslate" -type double3 0.999699 0.931436 0.945327;
+polyCylinder -radius 0.12 -height 1.5 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative -2.407 7.955 0;
+rotate -relative -worldSpace -forceOrderXYZ 0 0 80.442;
+select -add pCylinder5.f[40:59];
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pivotX -3.146240254 -pivotY 8.079952309 -pivotZ -2.235174179e-08 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder5.f[40:59];
+setAttr "polyExtrudeFace2.localTranslate" -type double3 1.10611 -1.439628 1.506987;
+
+//Create Hat
+//No idea what happened here, but business was jank after I extruded the hat brim.
+polyCylinder -radius 1 -height 2 -subdivisionsX 20 -subdivisionsY 2 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative 0.213 12.514 -0.133;
+rotate -relative -worldSpace -forceOrderXYZ -5.387 0 -9.033;
+select -add pCylinder6.e[20:39];
+move -r 0 -0.763356 0 -xc edge -xn; //This line didn't work if I typed -constrainAlongNormal and xformConstraint
+select -r pCylinder6.f[0:19];
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pivotX -1.192092896e-07 -pivotY 10.91032213 -pivotZ -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder6.f[0:19];
+setAttr "polyExtrudeFace3.localTranslate" -type double3 0.274081 0 0.537914;
+
+//Create Christmas Tree
+//So, I tried. There must be some quirks to MEL that I'm not catching. It's messed up what was once a good tree when I run it.
+polyCone -radius 1.5 -height 16 -subdivisionsX 20 -subdivisionsY 20 -subdivisionsZ 0 -axis 0 1 0 -roundCap 0 -createUVs 3 -ch 1;
+move -relative 6 8 -6;
+select -replace pCone2.e[53];
+select -add pCone2.e[40:59];
+move -relative 0 -0.84927 0;
+scale -relative -pivot 6.083591cm 2.035072cm -6.176471cm 4.249834 1 4.249834;
+select -replace pCone2.e[95];
+select -add pCone2.e[80:99];
+move -relative 0 -0.715917 0;
+scale -relative -pivot 6.083591cm 4.884083cm -6.176471cm 4.481965 1 4.481965;
+select -replace pCone2.e[76];
+select -add pCone2.e[60:79];
+scale -relative -pivot 6.083591cm 4.8cm -6.176471cm 1.892812 1 1.892812;
+select -replace pCone2.e[135];
+select -add pCone2.e[120:139];
+move -relative 0 -0.734934 0;
+scale -relative -pivot 6.083591cm 8.065066cm -6.176471cm 4.589103 1 4.589103;
+select -replace pCone2.e[116];
+select -add pCone2.e[100:119];
+scale -relative -pivot 6.083591cm 8cm -6.176471cm 1.857099 1 1.857099;
+select -replace pCone2.e[175];
+select -add pCone2.e[160:179];
+move -relative 0 -0.688426 0;
+scale -relative -pivot 6.083591cm 11.311574cm -6.176471cm 5.392633 1 5.392633;
+select -replace pCone2.e[194];
+select -add pCone2.e[180:199];
+move -relative 0 -0.511905 0;
+scale -relative -pivot 6.083591cm 13.088095cm -6.176471cm 1.767818 1 1.767818;
+select -replace pCone2.vtx[200];
+move -relative 0 -1.572475 0;
