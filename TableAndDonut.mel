@@ -1,0 +1,29 @@
+//Set the height of the legs, and the depth of the table and it will do the rest!
+float $legHeight = 6;
+float $tableTopD = 13;
+
+//Creates the legs of the table and evenly spaces them.
+polyCube -w ($legHeight/5) -h $legHeight -d ($legHeight/5) -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+move -r -os -wd (($tableTopD) - ($legHeight/2)) ($legHeight/2) (($tableTopD/2) - ($legHeight/5));
+
+polyCube -w ($legHeight/5) -h $legHeight -d ($legHeight/5) -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+move -r -os -wd (-1*(($tableTopD) - ($legHeight/2))) ($legHeight/2) (($tableTopD/2) - ($legHeight/5));
+
+polyCube -w ($legHeight/5) -h $legHeight -d ($legHeight/5) -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+move -r -os -wd (($tableTopD) - ($legHeight/2)) ($legHeight/2) (-1*(($tableTopD/2) - ($legHeight/5)));
+
+polyCube -w ($legHeight/5) -h $legHeight -d ($legHeight/5) -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+move -r -os -wd (-1*(($tableTopD) - ($legHeight/2))) ($legHeight/2) (-1*(($tableTopD/2) - ($legHeight/5)));
+
+//Creates table top and places it on top of the table legs.
+polyCube -w ($tableTopD*2) -h ($tableTopD/10) -d ($tableTopD) -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+move -r -os -wd 0 ($legHeight + (($tableTopD/10)/2)) 0;
+select -r pCube5.e[1];
+select -toggle pCube5.e[6];
+select -toggle pCube5.e[2];
+select -toggle pCube5.e[7];
+polyBevel3 -fraction 0.5 -offsetAsFraction 1 -autoFit 1 -depth 1 -mitering 0 -miterAlong 0 -chamfer 1 -segments 1 -worldSpace 1 -smoothingAngle 30 -subdivideNgons 1 -mergeVertices 1 -mergeVertexTolerance 0.0001 -miteringAngle 180 -angleTolerance 180 -ch 1 pCube5.e[1:2] pCube5.e[6:7];
+
+//Creates a donut and places it on top of the table.
+polyTorus -r ($tableTopD/12) -sr 0.5 -tw 0 -sx 2 -sy 2 -ax 0 1 0 -cuv 1 -ch 1;
+move -r -os -wd ($tableTopD/3) ($legHeight + ((($tableTopD/10)/2) + ($tableTopD/12))) (0);
