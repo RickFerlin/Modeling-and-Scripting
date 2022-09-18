@@ -1,0 +1,16 @@
+//Spiral Staircase maker!
+proc GenerateStaircase(int $stairAmount, int $width, int $depth, int $height, float $piv, float $stepHeight, float $stepRotate)
+{
+    polyCube -w $width -h $height -d $depth -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+    move -r $piv 0 0 pCube1.scalePivot pCube1.rotatePivot;
+
+    for ($i = 1; $i <= $stairAmount; $i++)
+    {
+        duplicate -rr;
+        move -r 0 $stepHeight 0 ;
+        rotate -r -os -fo 0 $stepRotate 0 ;
+    }
+}
+
+GenerateStaircase(50, 8, 4, 1, 8, 1.2, 18);
+//(How many stairs, width of stairs, depth of stairs, height of stairs, pivot transform, step height, step rotation)
