@@ -1,0 +1,80 @@
+global proc string Addition(float $input1, float $input2)
+{
+    float $sum = ($input1 + $input2);
+    return $sum;
+}
+
+global proc string Subtraction(float $input1, float $input2)
+{
+    float $difference = ($input1 - $input2);
+    return $difference;
+}
+
+global proc string Multiplication(float $input1, float $input2)
+{
+    float $product = ($input1 * $input2);
+    return $product;
+}
+
+global proc string Division(float $input1, float $input2)
+{
+    float $quotient = ($input1 / $input2);
+    return $quotient;
+}
+
+global proc string Exponent(float $input1, float $input2)
+{
+    float $power = pow($input1, $input2);
+    return $power;
+}
+
+global proc string Mean(float $input1, float $input2, float $input3)
+{
+    float $average = (($input1 + $input2 + $input3) / 3);
+    return $average;
+}
+
+global proc float Median(float $input1, float $input2, float $input3)
+{
+    float $inputList[] = {$input1, $input2, $input3};
+    $inputList = `sort $inputList`;
+    return  $inputList[1];
+}
+
+global proc Calculator(float $input1, float $input2, float $input3, int $operation)
+{
+    if ($operation == 1)
+    {
+        print ($input1 + " + " + $input2 + " = " + (Addition($input1, $input2)));
+    }
+    else  if ($operation == 2)
+    {
+        print ($input1 + " - " + $input2 + " = " + (Subtraction($input1, $input2)));
+    }
+    else  if ($operation == 3)
+    {
+        print ($input1 + " x " + $input2 + " = " + (Multiplication($input1, $input2)));
+    }
+    else  if ($operation == 4)
+    {
+        print ($input1 + " / " + $input2 + " = " + (Division($input1, $input2)));
+    }
+    else  if ($operation == 5)
+    {
+        print ($input1 + " ^ " + $input2 + " = " + (Exponent($input1, $input2)));
+    }
+    else  if ($operation == 6)
+    {
+        print ("The average of " + $input1 + ", " + $input2 + ", and " + $input3 + " is " + (Mean($input1, $input2, $input3)));
+    }
+    else  if ($operation == 7)
+    {
+        print ("The median of " + $input1 + ", " + $input2 + ", and " + $input3 + " is " + (Median($input1, $input2, $input3)));
+    }
+    else
+    {
+        print "Make sure to select a valid operation. Operations 1 through 5 only require two values. The third value will not be included.";
+    }
+}
+
+Calculator (3, 9, 5, 1);
