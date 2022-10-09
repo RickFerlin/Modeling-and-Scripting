@@ -1,0 +1,112 @@
+global proc float Addition(float $input[])
+{
+    float $sum = 0;  
+    for($i=0; $i<size($input); $i++)
+    {
+        $sum += $input[$i];
+    }
+    return $sum;
+}
+
+global proc float Subtraction(float $input[])
+{
+    float $difference = $input[0];
+    for($i=1; $i<size($input); $i++)
+    {
+        $difference -= $input[$i];
+    }
+    return $difference;
+}
+
+global proc float Multiplication(float $input[])
+{
+    float $product = $input[0];
+    for($i=1; $i<size($input); $i++)
+    {
+        $product *= $input[$i];
+    }
+    return $product;
+}
+
+global proc float Division(float $input[])
+{
+    float $quotient = $input[0];
+    for($i=1; $i<size($input); $i++)
+    {
+        $quotient /= $input[$i];
+    }
+    return $quotient;
+}
+
+global proc string Calculator(float $input[], int $operation)
+{
+    float $result;
+    string $operSymbol;
+
+    if ($operation == 1)
+    {
+        $result = Addition($input);
+        $operSymbol = " + ";
+        return (floatArrayToString($input, $operSymbol) + " = " + $result);
+    }
+    else  if ($operation == 2)
+    {
+        $result = Subtraction($input);
+        $operSymbol = " - ";
+        return (floatArrayToString($input, $operSymbol) + " = " + $result);
+    }
+    else  if ($operation == 3)
+    {
+        $result = Multiplication($input);
+        $operSymbol = " x ";
+        return (floatArrayToString($input, $operSymbol) + " = " + $result);
+    }
+    else  if ($operation == 4)
+    {
+        $result = Division($input);
+        $operSymbol = " / ";
+        return (floatArrayToString($input, $operSymbol) + " = " + $result);
+    }
+    else
+    {
+        print "Make sure to select a valid operation.";
+    }
+}
+
+global proc CalcButtonCmd()
+{
+    string $input1Field = `optionVar -q "firstFloat"`;
+    string $operField = `optionVar -q "calcOperation"`;
+    string $input2Field = `optionVar -q "secondFloat"`;
+    string $resultField = `optionVar -q "calcResult"`;
+
+    float $input1 = `floatField -q -value $input1Field`;
+    int $oper = `radioButtonGrp -q -select $operField`;
+    float $input2 = `floatField -q -value $input2Field`;
+   
+
+    string $result = Calculator({$input1, $input2}, $oper);
+    textField -e -text $result $resultField;
+}
+
+global proc CalcUI()
+{
+string $mWindow = "CalcWindow";
+
+if (`window -exists $mWindow`)
+    deleteUI $mWindow;
+
+$mWindow = `window -title "Calculator"
+                   -widthHeight 300 400
+                   -resizeToFitChildren 1
+                   $mWindow`;
+string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+optionVar -stringValue "firstFloat" `floatField -parent $mColumn`;
+optionVar -stringValue "calcOperation" `radioButtonGrp -parent $mColumn -numberOfRadioButtons 4 -labelArray4 " + " " - " " * " " / "`;
+optionVar -stringValue "secondFloat" `floatField -parent $mColumn`;
+button -parent $mColumn -label "=" -command "CalcButtonCmd";
+optionVar -stringValue "calcResult" `textField -parent $mColumn -editable 0`;
+showWindow $mWindow;
+}
+
+CalcUI();
