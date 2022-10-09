@@ -110,3 +110,5 @@ showWindow $mWindow;
 }
 
 CalcUI();
+
+//Run all code to call UI
