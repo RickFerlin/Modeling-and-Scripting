@@ -1,0 +1,65 @@
+//Generates a set amount of duplicates of the selected object and disperses them randomly throughout a set range
+
+proc GenerateRandomPlacement(int $dupAmount, float $minX, float $maxX, float $minY, float $maxY, float $minZ, float $maxZ)
+{
+    for ($i = 0; $i <= $dupAmount; $i++)
+    {
+        $xRange = rand($minX, $maxX);
+        $yRange = rand($minY, $maxY);
+        $zRange = rand($minZ, $maxZ);
+
+        duplicate;
+        move -ws $xRange $yRange $zRange;
+    }
+}
+
+global proc GoBtnCmd()
+{
+    string $dupField = `optionVar -q "duplicates"`;
+    string $xMinField = `optionVar -q "xRangeMin"`;
+    string $xMaxField = `optionVar -q "xRangeMax"`;
+    string $yMinField = `optionVar -q "yRangeMin"`;
+    string $yMaxField = `optionVar -q "yRangeMax"`;
+    string $zMinField = `optionVar -q "zRangeMin"`;
+    string $zMaxField = `optionVar -q "zRangeMax"`;
+
+    int $dup = `intField -q -value $dupField`;
+    float $xMin = `floatField -q -value $xMinField`;
+    float $xMax = `floatField -q -value $xMaxField`;
+    float $yMin = `floatField -q -value $yMinField`;
+    float $yMax = `floatField -q -value $yMaxField`;
+    float $zMin = `floatField -q -value $zMinField`;
+    float $zMax = `floatField -q -value $zMaxField`;
+
+    GenerateRandomPlacement($dup, $xMin, $xMax, $yMin, $yMax, $zMin, $zMax);
+}
+
+global proc RPGUI()
+{
+string $mWindow = "RPGWindow";
+
+if (`window -exists $mWindow`)
+    deleteUI $mWindow;
+
+$mWindow = `window -title "Random Placement Generator"
+                   -widthHeight 300 400
+                   -resizeToFitChildren 1
+                   $mWindow`;
+string $mCol = `columnLayout -parent $mWindow`;
+textField -parent $mCol -text "# of Duplicates" -editable 0; 
+optionVar -stringValue "duplicates" `intField -parent $mCol`;
+string $mRColumn = `rowColumnLayout -parent $mWindow -numberOfRows 3`;
+textField -parent $mRColumn -text "X Range" -editable 0;
+optionVar -stringValue "xRangeMin" `floatField -parent $mRColumn`;
+optionVar -stringValue "xRangeMax" `floatField -parent $mRColumn`;
+textField -parent $mRColumn -text "Y Range" -editable 0;
+optionVar -stringValue "yRangeMin" `floatField -parent $mRColumn`;
+optionVar -stringValue "yRangeMax" `floatField -parent $mRColumn`;
+textField -parent $mRColumn -text "Z Range" -editable 0;
+optionVar -stringValue "zRangeMin" `floatField -parent $mRColumn`;
+optionVar -stringValue "zRangeMax" `floatField -parent $mRColumn`;
+button -parent $mRColumn -label "Go!" -command "GoBtnCmd";
+showWindow $mWindow;
+}
+
+RPGUI();
